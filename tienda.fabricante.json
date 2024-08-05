@@ -1,0 +1,54 @@
+[{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff313116"
+  },
+  "nombre": "Asus"
+},
+{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff313117"
+  },
+  "nombre": "Lenovo"
+},
+{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff313118"
+  },
+  "nombre": "Hewlett-Packard"
+},
+{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff313119"
+  },
+  "nombre": "Samsung"
+},
+{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff31311a"
+  },
+  "nombre": "Seagate"
+},
+{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff31311b"
+  },
+  "nombre": "Crucial"
+},
+{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff31311c"
+  },
+  "nombre": "Gigabyte"
+},
+{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff31311d"
+  },
+  "nombre": "Huawei"
+},
+{
+  "_id": {
+    "$oid": "66b00d414a08e3a7ff31311e"
+  },
+  "nombre": "Xiaomi"
+}]

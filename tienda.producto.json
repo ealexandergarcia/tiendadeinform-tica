@@ -1,0 +1,110 @@
+[{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff31311f"
+  },
+  "nombre": "Disco duro SATA3 1TB",
+  "precio": 86.99,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff31311a"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313120"
+  },
+  "nombre": "Memoria RAM DDR4 8GB",
+  "precio": 120,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff31311b"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313121"
+  },
+  "nombre": "Disco SSD 1 TB",
+  "precio": 150.99,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff313119"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313122"
+  },
+  "nombre": "GeForce GTX 1050Ti",
+  "precio": 185,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff31311c"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313123"
+  },
+  "nombre": "GeForce GTX 1080 Xtreme",
+  "precio": 755,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff31311b"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313124"
+  },
+  "nombre": "Monitor 24 LED Full HD",
+  "precio": 202,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff313116"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313125"
+  },
+  "nombre": "Monitor 27 LED Full HD",
+  "precio": 245.99,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff313116"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313126"
+  },
+  "nombre": "Portátil Yoga 520",
+  "precio": 559,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff313117"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313127"
+  },
+  "nombre": "Portátil Ideapd 320",
+  "precio": 444,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff313117"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313128"
+  },
+  "nombre": "Impresora HP Deskjet 3720",
+  "precio": 59.99,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff313118"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b00e1c4a08e3a7ff313129"
+  },
+  "nombre": "Impresora HP Laserjet Pro M26nw",
+  "precio": 180,
+  "id_fabricante": {
+    "$oid": "66b00d414a08e3a7ff313118"
+  }
+}]
