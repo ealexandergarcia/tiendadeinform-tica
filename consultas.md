@@ -651,8 +651,10 @@ WHERE
 
 36. Lista el nombre y el precio de todos los productos que tengan un precio mayor o igual a 180€. Ordene el resultado en primer lugar por el precio (en orden descendente) y en segundo lugar por el nombre (en orden ascendente).
 
+
     ```javascript
     [
+
       {
         $match: {
           precio: {
@@ -677,6 +679,7 @@ WHERE
     ```
 
 ```sql
+
 SELECT 
     nombre,
     precio
@@ -687,5 +690,474 @@ WHERE
 ORDER BY 
     precio DESC,
     nombre ASC;
-   
+  
 ```
+
+
+### 2. Consultas multitabla (Composición interna)
+
+1. Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  }
+]
+```
+
+2. Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos. Ordene el resultado por el nombre del fabricante, por orden alfabético.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $sort: {
+      nombre_fabricante: 1
+    }
+  }
+]
+```
+
+3. Devuelve una lista con el identificador del producto, nombre del producto, identificador del fabricante y nombre del fabricante, de todos los productos de la base de datos.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 1,
+      nombre: 1,
+      id_fabricante:1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $sort: {
+      nombre_fabricante: 1
+    }
+  }
+]
+```
+
+4. Devuelve el nombre del producto, su precio y el nombre de su fabricante, del producto más barato.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $sort: {
+      precio: 1
+    }
+  },
+  {
+    $limit: 1
+  }
+]
+```
+
+5. Devuelve el nombre del producto, su precio y el nombre de su fabricante, del producto más caro.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $sort: {
+      precio: -1
+    }
+  },
+  {
+    $limit: 1
+  }
+]
+```
+
+6. Devuelve una lista de todos los productos del fabricante `Lenovo`.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $match: {
+      nombre_fabricante: "Lenovo"
+    }
+  }
+]
+```
+
+7. Devuelve una lista de todos los productos del fabricante `Crucial` que tengan un precio mayor que 200€.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $match: {
+      nombre_fabricante: "Crucial",
+      precio: { $gte: 200 }
+    }
+  }
+]
+```
+
+8. Devuelve un listado con todos los productos de los fabricantes `Asus`, `Hewlett-Packard`y `Seagate`. Sin utilizar el operador `IN`.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $match: {
+      $or: [
+        { nombre_fabricante: "Asus" },
+        { nombre_fabricante: "Hewlett-Packard" },
+        { nombre_fabricante: "Seagate" }
+      ]
+    }
+  }
+]
+```
+
+9. Devuelve un listado con todos los productos de los fabricantes `Asus`, `Hewlett-Packard`y `Seagate`. Utilizando el operador `IN`.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $match: {
+      nombre_fabricante: {
+        $in: [
+          "Asus",
+          "Hewlett-Packard",
+          "Seagate"
+        ]
+      }
+    }
+  }
+]
+```
+
+10. Devuelve un listado con el nombre y el precio de todos los productos de los fabricantes cuyo nombre termine por la vocal `e`.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $match: {
+      nombre_fabricante: {
+        $regex: "e$",
+        $options: "i"
+      }
+    }
+  }
+]
+```
+
+11. Devuelve un listado con el nombre y el precio de todos los productos cuyo nombre de fabricante contenga el carácter `w` en su nombre.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $match: {
+      nombre_fabricante: {
+        $regex: /w/,
+        $options: "i"
+      }
+    }
+  }
+]
+```
+
+12. Devuelve un listado con el nombre de producto, precio y nombre de fabricante, de todos los productos que tengan un precio mayor o igual a 180€. Ordene el resultado en primer lugar por el precio (en orden descendente) y en segundo lugar por el nombre (en orden ascendente)
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      precio: 1,
+      nombre_fabricante: "$fabricante_info.nombre"
+    }
+  },
+  {
+    $match: {
+      precio: { $gte: 180 }
+    }
+  },
+  {
+    $sort: {
+      precio: -1,
+      nombre: 1
+    }
+  }
+]
+```
+
+13. Devuelve un listado con el identificador y el nombre de fabricante, solamente de aquellos fabricantes que tienen productos asociados en la base de datos.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "fabricante",
+      localField: "id_fabricante",
+      foreignField: "_id",
+      as: "fabricante_info"
+    }
+  },
+  {
+    $unwind: "$fabricante_info"
+  },
+  {
+    $group: {
+      _id: "$id_fabricante",
+      nombre_fabricante: {
+        $first: "$fabricante_info.nombre"
+      }
+    }
+  },
+  {
+    $project: {
+      _id: 1,
+      nombre_fabricante: 1
+    }
+  }
+]
+```
+
+### 3. Consultas multitabla (Composición externa)
+
+1. Devuelve un listado de **todos los fabricantes** que existen en la base de datos, junto con los productos que tiene cada uno de ellos. El listado deberá mostrar también aquellos fabricantes que no tienen productos asociados.
+
+```javascript
+
+```
+
+2. Devuelve un listado donde sólo aparezcan aquellos fabricantes que no tienen ningún producto asociado.
+
+```javascript
+[
+  {
+    $lookup: {
+      from: "producto",
+      localField: "_id",
+      foreignField: "id_fabricante",
+      as: "productos"
+    }
+  },
+  {
+    $match: {
+      "productos": { $size: 0 }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      nombre_fabricante: "$nombre"
+    }
+  }
+]
+```
+
+3. ¿Pueden existir productos que no estén relacionados con un fabricante? Justifique su respuesta.
+
+   Sí, pueden existir productos que no estén relacionados con un fabricante si la base de datos no impone integridad referencial o si el diseño permite relaciones opcionales. En una base de datos con restricciones adecuadas, cada producto debería tener un fabricante asociado.
